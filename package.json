@@ -1,0 +1,17 @@
+{
+  "name": "reUnderScore",
+  "version": "1.0.0",
+  "description": "underScore.js Implementation for learning js fundamentals. ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "author": "Rob Adelmann",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^2.3.0",
+    "express": "^4.12.4",
+    "mocha": "^2.2.5"
+  }
+}
