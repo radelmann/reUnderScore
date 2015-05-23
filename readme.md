@@ -1,4 +1,4 @@
-# Clone of some underscore.js functions for HackReactor technical interview prep.
+Clone of some underscore.js functions for HackReactor technical interview prep.
 
 You can clone or download this repo. Once you have done so, from the root
 directory of the repo, run:
