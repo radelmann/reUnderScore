@@ -1,31 +1,33 @@
-if ( typeof window === 'undefined' ) {
-  	var expect = require("chai").expect;
+if (typeof window === 'undefined') {
+	var expect = require("chai").expect;
 	var _ = require("../app/code.js")._;
 }
 
 describe("reUnderScore - Collection Functions", function() {
 
-	describe("Map", function() {
+	describe("Map - Each and Range also tested", function() {
 		var mapFn = function(n) {
 			return n * 2;
 		};
 
-		it("Mutiply each element in input array by 2", function() {
-			expect(_.map(_.range(1, 5), mapFn)).to.deep.equal([2, 4, 6, 8, 10]);
+		describe("Mutiply each element in input list by 2", function() {
+
+			it("Test with array input", function() {
+				expect(_.map(_.range(1, 5), mapFn)).to.deep.equal([2, 4, 6, 8, 10]);
+			});
+
+			it("Test with object input", function() {
+				var col = {
+					one: 1,
+					two: 2,
+					three: 3,
+					four: 4,
+					five: 5
+				};
+				expect(_.map(col, mapFn)).to.deep.equal([2, 4, 6, 8, 10]);
+			});
 		});
 
-		it("Mutiply each property in input object by 2", function() {
-
-			var col = {
-				one: 1,
-				two: 2,
-				three: 3,
-				four: 4,
-				five: 5
-			};
-
-			expect(_.map(col, mapFn)).to.deep.equal([2, 4, 6, 8, 10]);
-		});
 	});
 
 	describe("Reduce", function() {
@@ -53,20 +55,56 @@ describe("reUnderScore - Collection Functions", function() {
 	});
 
 	describe("Find", function() {
-		it("Searches list returns first item to pass true for predicate", function() {
-			var even = _.find([1, 2, 3, 4, 5, 6], function(num) {
-				return num % 2 === 0;
+		describe("Searches list returns first item to pass true for predicate", function() {
+
+			it("Test with array input", function() {
+				var even = _.find([1, 2, 3, 4, 5, 6], function(num) {
+					return num % 2 === 0;
+				});
+				expect(even).to.equal(2);
 			});
-			expect(even).to.equal(2);
+
+			it("Test with object input", function() {
+				var col = {
+					one: 1,
+					two: 2,
+					three: 3,
+					four: 4,
+					five: 5,
+					six: 6
+				};
+				var even = _.find(col, function(num) {
+					return num % 2 === 0;
+				});
+				expect(even).to.equal(2);
+			});
 		});
 	});
 
-	describe("Filter", function() {
-		it("Searches list returns all items to pass true for predicate", function() {
-			var even = _.filter([1, 2, 3, 4, 5, 6], function(num) {
-				return num % 2 === 0;
+	describe("Filter - Each also tested", function() {
+		describe("Searches list returns all items to pass true for predicate", function() {
+
+			it("Test with array input", function() {
+				var even = _.filter([1, 2, 3, 4, 5, 6], function(num) {
+					return num % 2 === 0;
+				});
+				expect(even).to.deep.equal([2, 4, 6]);
 			});
-			expect(even).to.deep.equal([2, 4, 6]);
+
+			it("Test with object input", function() {
+				var col = {
+					one: 1,
+					two: 2,
+					three: 3,
+					four: 4,
+					five: 5,
+					six: 6
+				};
+				var even = _.filter(col, function(num) {
+					return num % 2 === 0;
+				});
+				expect(even).to.deep.equal([2, 4, 6]);
+			});
 		});
 	});
 
@@ -147,25 +185,68 @@ describe("reUnderScore - Collection Functions", function() {
 	});
 
 	describe("Reject", function() {
-		it("Returns values in list that return false for predicate", function() {
-			var odds = _.reject([1, 2, 3, 4, 5, 6], function(num) {
-				return num % 2 === 0;
+		describe("Returns values in list that return false for predicate", function() {
+
+			it("Test with array input", function() {
+				var odds = _.reject([1, 2, 3, 4, 5, 6], function(num) {
+					return num % 2 === 0;
+				});
+				expect(odds).to.deep.equal([1, 3, 5]);
 			});
-			expect(odds).to.deep.equal([1, 3, 5]);
+
+			it("Test with object input", function() {
+				var col = {
+					one: 1,
+					two: 2,
+					three: 3,
+					four: 4,
+					five: 5,
+					six: 6
+				};
+				var odds = _.reject(col, function(num) {
+					return num % 2 === 0;
+				});
+				expect(odds).to.deep.equal([1, 3, 5]);
+			});
 		});
 	});
 
 	describe("Every", function() {
-		var isEven = function(input) {
-			return input % 2 === 0;
-		};
+		describe("Returns true if all values in list return true for predicate", function() {
 
-		it("Returns true if all values in list return true for predicate", function() {
-			var result = _.every(_.range(2, 30, 2), isEven);
-			expect(result).to.equal(true);
+			var isEven = function(input) {
+				return input % 2 === 0;
+			};
 
-			result = _.every(_.range(1, 30, 2), isEven);
-			expect(result).to.equal(false);
+			it("Test with array input", function() {
+				var result = _.every(_.range(2, 30, 2), isEven);
+				expect(result).to.equal(true);
+
+				result = _.every(_.range(1, 30, 2), isEven);
+				expect(result).to.equal(false);
+			});
+
+			it("Test with object input", function() {
+				var col = {
+					one: 1,
+					two: 2,
+					three: 3,
+					four: 4,
+					five: 5,
+					six: 6
+				};
+
+				var result = _.every(col, isEven);
+				expect(result).to.equal(false);
+
+				col = {
+					two: 2,
+					four: 4,
+					six: 6
+				};
+				result = _.every(col, isEven);
+				expect(result).to.equal(true);
+			});
 		});
 	});
 
@@ -174,12 +255,39 @@ describe("reUnderScore - Collection Functions", function() {
 			return input % 2 === 0;
 		};
 
-		it("Returns true if any values in list return true for predicate", function() {
-			var result = _.some([1, 3, 5, 7, 9, 10], isEven);
-			expect(result).to.equal(true);
+		describe("Returns true if any values in list return true for predicate", function() {
+			it("Test with array input", function() {
+				var result = _.some([1, 3, 5, 7, 9, 10], isEven);
+				expect(result).to.equal(true);
 
-			result = _.some([1, 3, 5, 7, 9], isEven);
-			expect(result).to.equal(false);
+				result = _.some([1, 3, 5, 7, 9], isEven);
+				expect(result).to.equal(false);
+			});
+
+			it("Test with object input", function() {
+				var col = {
+					one: 1,
+					two: 3,
+					three: 5,
+					four: 7,
+					five: 9,
+					six: 10
+				};
+
+				var result = _.some(col, isEven);
+				expect(result).to.equal(true);
+
+				col = {
+					one: 1,
+					two: 3,
+					three: 5,
+					four: 7,
+					five: 9
+				};
+
+				result = _.some(col, isEven);
+				expect(result).to.equal(false);
+			});
 		});
 	});
 
@@ -204,96 +312,173 @@ describe("reUnderScore - Collection Functions", function() {
 	});
 
 	describe("Pluck", function() {
-		it("Extracts a list of property values", function() {
-			var stooges = [{name: 'moe', age: 40}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
-			var result = _.pluck(stooges, 'name');
-			expect(result).to.deep.equal(["moe", "larry", "curly"]);
+		describe("Extracts a list of property values", function() {
+
+			it("Test with array input", function() {
+				var stooges = [{
+					name: 'moe',
+					age: 40
+				}, {
+					name: 'larry',
+					age: 50
+				}, {
+					name: 'curly',
+					age: 60
+				}];
+				var result = _.pluck(stooges, 'name');
+				expect(result).to.deep.equal(["moe", "larry", "curly"]);
+			});
+
+			it("Test with object input", function() {
+				var stooges = {
+					'moe': {
+						age: 40,
+						height: 6.1,
+						weight: 150
+					},
+					'larry': {
+						age: 50,
+						height: 6.2,
+						weight: 155
+					},
+					'curly': {
+						age: 60,
+						height: 6.3,
+						weight: 160
+					}
+				};
+
+				var result = _.pluck(stooges, 'age');
+				expect(result).to.deep.equal([40, 50, 60]);
+			});
 		});
 	});
 
 	describe("Max", function() {
-		it("Returns max value in list.", function() {
-			var stooges = [{
-				name: 'moe',
-				age: 40
-			}, {
-				name: 'larry',
-				age: 50
-			}, {
-				name: 'curly',
-				age: 60
-			}];
+		describe("Returns max value in list.", function() {
+			it("Test with array input", function() {
+				var stooges = [{
+					name: 'moe',
+					age: 40
+				}, {
+					name: 'larry',
+					age: 50
+				}, {
+					name: 'curly',
+					age: 60
+				}];
 
-			var result = _.max(stooges, function(stooge) {
-				return stooge.age;
+				var result = _.max(stooges, function(stooge) {
+					return stooge.age;
+				});
+
+				expect(result).to.deep.equal({
+					name: 'curly',
+					age: 60
+				});
 			});
 
-			expect(result).to.deep.equal({
-				name: 'curly',
-				age: 60
+			it("Test with no iteratee function, array sort used as default", function() {
+				var result = _.max(_.range(15));
+				expect(result).to.equal(15);
 			});
 		});
 	});
 
 	describe("Min", function() {
-		it("Returns min value in list.", function() {
-			var numbers = [10, 5, 100, 2, 1000];
-			var result = _.min(numbers);
-			expect(result).to.equal(2);
+		describe("Returns min value in list.", function() {
+			it("Test with array input", function() {
+				var stooges = [{
+					name: 'moe',
+					age: 40
+				}, {
+					name: 'larry',
+					age: 50
+				}, {
+					name: 'curly',
+					age: 60
+				}];
+
+				var result = _.min(stooges, function(stooge) {
+					return stooge.age;
+				});
+
+				expect(result).to.deep.equal({
+					name: 'moe',
+					age: 40
+				});
+			});
+
+			it("Test with no iteratee function, array sort used as default", function() {
+				var numbers = [10, 5, 100, 2, 1000];
+				var result = _.min(numbers);
+				expect(result).to.equal(2);
+			});
 		});
 	});
 
 	describe("Sort By", function() {
-		it("Returns sorted copy of list.", function() {
-			var result = _.sortBy([1, 2, 3, 4, 5, 6], function(num) {
-				return Math.sin(num);
-			});
-			expect(result).to.deep.equal([5, 4, 6, 3, 1, 2]);
+		describe("Returns sorted copy of list.", function() {
 
-			var stooges = [{
-				name: 'moe',
-				age: 40
-			}, {
-				name: 'larry',
-				age: 50
-			}, {
-				name: 'curly',
-				age: 60
-			}];
-			result = _.sortBy(stooges, 'name');
-			expect(result).to.deep.equal([{
-				name: 'curly',
-				age: 60
-			}, {
-				name: 'larry',
-				age: 50
-			}, {
-				name: 'moe',
-				age: 40
-			}]);
+			it("Test with array input and interatee function", function() {
+				var result = _.sortBy([1, 2, 3, 4, 5, 6], function(num) {
+					return Math.sin(num);
+				});
+				expect(result).to.deep.equal([5, 4, 6, 3, 1, 2]);
+			});
+
+			it("Test with array input and interatee property", function() {
+				var stooges = [{
+					name: 'moe',
+					age: 40
+				}, {
+					name: 'larry',
+					age: 50
+				}, {
+					name: 'curly',
+					age: 60
+				}];
+				result = _.sortBy(stooges, 'name');
+
+				expect(result).to.deep.equal([{
+					name: 'curly',
+					age: 60
+				}, {
+					name: 'larry',
+					age: 50
+				}, {
+					name: 'moe',
+					age: 40
+				}]);
+			});
 		});
 	});
 
 	describe("Group By", function() {
-		it("Splits Collection into lists, grouped by predicate result.", function() {
-			var result = _.groupBy([1.3, 2.1, 2.4], function(num) {
-				return Math.floor(num);
-			});
-			expect(result).to.deep.equal({
-				1: [1.3],
-				2: [2.1, 2.4]
+		describe("Splits Collection into lists, grouped by predicate result.", function() {
+
+			it("Test with array input and interatee function", function() {
+				var result = _.groupBy([1.3, 2.1, 2.4], function(num) {
+					return Math.floor(num);
+				});
+				expect(result).to.deep.equal({
+					1: [1.3],
+					2: [2.1, 2.4]
+				});
 			});
 
-			result = _.groupBy(['one', 'two', 'three'], 'length');
-			expect(result).to.deep.equal({
-				3: ["one", "two"],
-				5: ["three"]
+			it("Test with array input and interatee property", function() {
+				result = _.groupBy(['one', 'two', 'three'], 'length');
+				expect(result).to.deep.equal({
+					3: ["one", "two"],
+					5: ["three"]
+				});
 			});
 		});
 	});
 
 	describe("Index By", function() {
-		it("Returns key for each element in list.", function() {
+		it("Returns key value pairs for each element in list based on interatee property.", function() {
 			var stooges = [{
 				name: 'moe',
 				age: 40
@@ -329,7 +514,10 @@ describe("reUnderScore - Collection Functions", function() {
 			var result = _.countBy([1, 2, 3, 4, 5], function(num) {
 				return num % 2 === 0 ? 'even' : 'odd';
 			});
-			expect(result).to.deep.equal({odd: 3, even: 2}); 
+			expect(result).to.deep.equal({
+				odd: 3,
+				even: 2
+			});
 		});
 	});
 
@@ -337,35 +525,41 @@ describe("reUnderScore - Collection Functions", function() {
 		it("Returns shuffled copy of list.", function() {
 			var input = [1, 2, 3, 4, 5, 6];
 			var result = _.shuffle([1, 2, 3, 4, 5, 6]);
-			
-			expect(result.length).to.equal(input.length); 
-			expect(result).to.not.deep.equal(input); 
-			expect(result.sort()).to.deep.equal(input.sort()); 
+
+			expect(result.length).to.equal(input.length);
+			expect(result).to.not.deep.equal(input);
+			expect(result.sort()).to.deep.equal(input.sort());
 		});
 	});
 
 	describe("Sample", function() {
 		it("Returns random sample from list.", function() {
 			var result = _.sample([1, 2, 3, 4, 5, 6]);
-			expect(result.length).to.equal(1); 
+			expect(result.length).to.equal(1);
 
 			result = _.sample([1, 2, 3, 4, 5, 6], 3);
-			expect(result.length).to.equal(3); 
-			
+			expect(result.length).to.equal(3);
+
 		});
 	});
 
 	describe("To Array", function() {
 		it("Returns array from list", function() {
-			var result = (function(){ return _.toArray(arguments).slice(1); })(1, 2, 3, 4);
-			expect(result.sort()).to.deep.equal([2, 3, 4]); 
+			var result = (function() {
+				return _.toArray(arguments).slice(1);
+			})(1, 2, 3, 4);
+			expect(result.sort()).to.deep.equal([2, 3, 4]);
 		});
 	});
 
 	describe("Size", function() {
 		it("Returns number of values in list", function() {
-			var result = _.size({one: 1, two: 2, three: 3});
-			expect(result).to.equal(3); 
+			var result = _.size({
+				one: 1,
+				two: 2,
+				three: 3
+			});
+			expect(result).to.equal(3);
 		});
 	});
 
@@ -375,8 +569,10 @@ describe("reUnderScore - Collection Functions", function() {
 				return input % 2 !== 0;
 			};
 			var result = _.partition([0, 1, 2, 3, 4, 5], isOdd);
-			expect(result).to.deep.equal([[1, 3, 5], [0, 2, 4]]); 
+			expect(result).to.deep.equal([
+				[1, 3, 5],
+				[0, 2, 4]
+			]);
 		});
 	});
-
 });

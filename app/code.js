@@ -124,8 +124,8 @@ exports._ = {
 	},
 	/**
 	 * Searches list, returns first value that matches properties key value pairs.
-	 * @param  {[type]} list       
-	 * @param  {[type]} properties 
+	 * @param  {Array} list       
+	 * @param  {Object} properties 
 	 * @return {[type]}            
 	 */
 	findWhere: function(list, properties) {
@@ -221,7 +221,7 @@ exports._ = {
 	},
 	/**
 	 * Calls methodName for each value in list.
-	 * @param  {[type]} list       
+	 * @param  {Array} list       
 	 * @param  {[type]} methodName 
 	 * @return {[type]}            
 	 */
@@ -276,8 +276,9 @@ exports._ = {
 		} else {
 			//no iteratee func - use array sort
 			result = list.sort(function(a, b) {
-				return b > a;
-			})[0];
+				return parseInt(b) - parseInt(a);
+			});
+			return result[0];
 		}
 
 		if (result) {
@@ -307,7 +308,7 @@ exports._ = {
 			}
 		} else {
 			result = list.sort(function(a, b) {
-				return b < a;
+				return parseInt(a) - parseInt(b);
 			})[0];
 		}
 
@@ -371,7 +372,7 @@ exports._ = {
 		return result;
 	},
 	/**
-	 * Returns key for each element in list.
+	 * Returns key value pairs for each element in list based on interatee property.
 	 * @param  {[type]} list     
 	 * @param  {[type]} iteratee 
 	 * @return {object}          
@@ -527,20 +528,6 @@ exports._ = {
 		return typeof list === 'object';
 	},
 	/**
-	 * Invokes callback fn one time, subsequent calls result in no action
-	 * @param  {Function} fn 
-	 * @return {Function}      
-	 */
-	once: function(fn) {
-		var once = false;
-		return function() {
-			if (once === false) {
-				fn(arguments);
-				once = true;
-			}
-		};
-	},
-	/**
 	 * returns array of numbers based on start, end and step values
 	 * @param  {[type]} start [optional]
 	 * @param  {[type]} end   used as start point if no other params sent 
@@ -560,5 +547,19 @@ exports._ = {
 			arr.push(i);
 		}
 		return arr;
+	},
+	/**
+	 * Invokes callback fn one time, subsequent calls result in no action
+	 * @param  {Function} fn 
+	 * @return {Function}      
+	 */
+	once: function(fn) {
+		var once = false;
+		return function() {
+			if (once === false) {
+				fn(arguments);
+				once = true;
+			}
+		};
 	}
 };
