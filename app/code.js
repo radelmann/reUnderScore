@@ -19,9 +19,9 @@ exports._ = {
 	},
 	/**
 	 * Returns new array based on mapping list items though fn
-	 * @param  {[Array,Object]}   list 
+	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
-	 * @return {[Array]}        
+	 * @return {Array}        
 	 */
 	map: function(list, fn) {
 		var result = [];
@@ -33,10 +33,10 @@ exports._ = {
 	},
 	/**
 	 * Reduces list down to single value
-	 * @param  {[Array]}   list 
+	 * @param  {Array}   list 
 	 * @param  {Function} fn   
-	 * @param  {[type]}   memo 
-	 * @return {[type]}   memo  
+	 * @param  {mixed}   memo 
+	 * @return {mixed}   memo  
 	 */
 	reduce: function(list, fn, memo) {
 		for (var i = 0; i < list.length; i++) {
@@ -50,10 +50,10 @@ exports._ = {
 	},
 	/**
 	 * Performs reduce in reverse order
-	 * @param  {[Array]}   list  
+	 * @param  {Array}   list  
 	 * @param  {Function} fn   
-	 * @param  {[type]}   memo 
-	 * @return {[type]}   memo     
+	 * @param  {mixed}   memo 
+	 * @return {mixed}   memo     
 	 */
 	reduceRight: function(list, fn, memo) {
 		for (var i = list.length - 1; i >= 0; i--) {
@@ -67,9 +67,9 @@ exports._ = {
 	},
 	/**
 	 * Searches list returns first item to pass true for predicate
-	 * @param  {[Array,Object]}   list 
+	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
-	 * @return {[type]}        
+	 * @return {mixed}        
 	 */
 	find: function(list, fn) {
 		if (this.isArray(list)) {
@@ -89,9 +89,9 @@ exports._ = {
 	},
 	/**
 	 * Searches list returns all items to pass true for predicate
-	 * @param  {[Array,Object]}   list 
+	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
-	 * @return {[type]}        
+	 * @return {Array}        
 	 */
 	filter: function(list, fn) {
 		var result = [];
@@ -106,8 +106,8 @@ exports._ = {
 	/**
 	 * Searches list, returns array of all values that match properties key value pairs.
 	 * @param  {Array} list       
-	 * @param  {[type]} properties 
-	 * @return {[type]}            
+	 * @param  {Object} properties 
+	 * @return {Array}            
 	 */
 	where: function(list, properties) {
 		var result = [];
@@ -126,7 +126,7 @@ exports._ = {
 	 * Searches list, returns first value that matches properties key value pairs.
 	 * @param  {Array} list       
 	 * @param  {Object} properties 
-	 * @return {[type]}            
+	 * @return {Mixed}            
 	 */
 	findWhere: function(list, properties) {
 		var result = [];
@@ -143,9 +143,9 @@ exports._ = {
 	},
 	/**
 	 * Returns values in list that return false for predicate
-	 * @param  {[Array,Object]}   list 
+	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
-	 * @return {[type]}        
+	 * @return {Array}        
 	 */
 	reject: function(list, fn) {
 		var result = [];
@@ -159,9 +159,9 @@ exports._ = {
 	},
 	/**
 	 * Returns true if all values in list return true for predicate
-	 * @param  {[Array,Object]}   list 
+	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
-	 * @return {[type]}        
+	 * @return {Bool}        
 	 */
 	every: function(list, fn) {
 		if (this.isArray(list)) {
@@ -181,9 +181,9 @@ exports._ = {
 	},
 	/**
 	 * Returns true if any values in list return true for predicate
-	 * @param  {[Array,Object]}   list 
+	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
-	 * @return {[type]}        
+	 * @return {Bool}        
 	 */
 	some: function(list, fn) {
 		if (this.isArray(list)) {
@@ -204,10 +204,10 @@ exports._ = {
 	},
 	/**
 	 * Returns true value is present in list.
-	 * @param  {[type]} list      
-	 * @param  {[type]} value     
-	 * @param  {[type]} fromIndex 
-	 * @return {[type]}           
+	 * @param  {Array} list      
+	 * @param  {mixed} value     
+	 * @param  {int} fromIndex 
+	 * @return {Bool}           
 	 */
 	contains: function(list, value, fromIndex) {
 		if (!fromIndex) {
@@ -222,8 +222,8 @@ exports._ = {
 	/**
 	 * Calls methodName for each value in list.
 	 * @param  {Array} list       
-	 * @param  {[type]} methodName 
-	 * @return {[type]}            
+	 * @param  {String} methodName 
+	 * @return {Array}            
 	 */
 	invoke: function(list, methodName) {
 		var result = [];
@@ -237,8 +237,8 @@ exports._ = {
 	},
 	/**
 	 * Extracts a list of property values
-	 * @param  {[type]} list         
-	 * @param  {string} propertyName 
+	 * @param  {Array,Object} list         
+	 * @param  {String} propertyName 
 	 * @return {Array}              
 	 */
 	pluck: function(list, propertyName) {
@@ -256,9 +256,9 @@ exports._ = {
 	},
 	/**
 	 * Returns max value in list.
-	 * @param  {[Array,Object]}   list 
+	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
-	 * @return {[type]}        
+	 * @return {Mixed}        
 	 */
 	max: function(list, fn) {
 		var value, result;
@@ -289,9 +289,9 @@ exports._ = {
 	},	
 	/**
 	 * Returns min value in list.
-	 * @param  {[Array,Object]}   list 
+	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
-	 * @return {[type]}        
+	 * @return {Mixed}        
 	 */
 	min: function(list, fn) {
 		var value, result;
@@ -320,8 +320,8 @@ exports._ = {
 	},
 	/**
 	 * Returns sorted copy of list.
-	 * @param  {[type]} list     
-	 * @param  {[type]} iteratee 
+	 * @param  {Array} list     
+	 * @param  {Function,String} iteratee 
 	 * @return {Array}          
 	 */
 	sortBy: function(list, iteratee) {
@@ -339,8 +339,8 @@ exports._ = {
 	},
 	/**
 	 * Splits Collection into lists, grouped by predicate result.
-	 * @param  {[type]} list     
-	 * @param  {[type]} iteratee 
+	 * @param  {Array} list     
+	 * @param  {Function,String} iteratee 
 	 * @return {object}          
 	 */
 	groupBy: function(list, iteratee) {
@@ -373,9 +373,9 @@ exports._ = {
 	},
 	/**
 	 * Returns key value pairs for each element in list based on interatee property.
-	 * @param  {[type]} list     
-	 * @param  {[type]} iteratee 
-	 * @return {object}          
+	 * @param  {Array} list     
+	 * @param  {String} iteratee 
+	 * @return {Object}          
 	 */
 	indexBy: function(list, iteratee) {
 		var result = {};
@@ -387,9 +387,9 @@ exports._ = {
 	},
 	/**
 	 * Sort list into groups, return count by group.
-	 * @param  {[type]} list     
-	 * @param  {[type]} iteratee 
-	 * @return {object}          
+	 * @param  {Array} list     
+	 * @param  {Function} iteratee 
+	 * @return {Object}          
 	 */
 	countBy: function(list, iteratee) {
 		var result = {};
@@ -406,7 +406,7 @@ exports._ = {
 	},
 	/**
 	 * Returns shuffled copy of list.
-	 * @param  {[type]} list 
+	 * @param  {Array} list 
 	 * @return {Array}      
 	 */
 	shuffle: function(list) {
@@ -421,8 +421,8 @@ exports._ = {
 	},
 	/**
 	 * Returns random sample from list."
-	 * @param  {[type]} list 
-	 * @param  {[type]} n    
+	 * @param  {Array} list 
+	 * @param  {Int} n    
 	 * @return {Array}      
 	 */
 	sample: function(list, n) {
@@ -433,7 +433,7 @@ exports._ = {
 	},
 	/**
 	 * Returns array from list
-	 * @param  {[type]} list 
+	 * @param  {List} list - anything that can be iterated over (i.e. arguments param) 
 	 * @return {Array}      
 	 */
 	toArray: function(list) {
@@ -445,7 +445,7 @@ exports._ = {
 	},
 	/**
 	 * Returns number of values in list
-	 * @param  {[type]} list 
+	 * @param  {Array,Object} list 
 	 * @return {int}      
 	 */
 	size: function(list) {
@@ -457,7 +457,7 @@ exports._ = {
 	},
 	/**
 	 * Splits array into two groups based on predicate result from each item.
-	 * @param  {[Array,Object]}   list 
+	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {Array}        
 	 */
@@ -488,7 +488,7 @@ exports._ = {
 
 	/**
 	 * returns true is object is a string
-	 * @param  {[type]}  object 
+	 * @param  {Object}  object 
 	 * @return {Boolean}        
 	 */
 	isString: function(object) {
@@ -513,7 +513,7 @@ exports._ = {
 	},
 	/**
 	 * returns true if list is an array
-	 * @param  {[type]}  list 
+	 * @param  {Object}  list 
 	 * @return {Boolean}      
 	 */
 	isArray: function(list) {
@@ -521,7 +521,7 @@ exports._ = {
 	},
 	/**
 	 * returns true if list is an object
-	 * @param  {[type]}  list 
+	 * @param  {Object}  list 
 	 * @return {Boolean}      
 	 */
 	isObject: function(list) {
@@ -529,9 +529,9 @@ exports._ = {
 	},
 	/**
 	 * returns array of numbers based on start, end and step values
-	 * @param  {[type]} start [optional]
-	 * @param  {[type]} end   used as start point if no other params sent 
-	 * @param  {[type]} step  [optional]
+	 * @param  {Int} start optional
+	 * @param  {Int} end   used as start point if no other params sent 
+	 * @param  {Int} step  optional
 	 * @return {Array}       
 	 */
 	range: function(start, end, step) {
