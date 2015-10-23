@@ -1,5 +1,5 @@
-if ( typeof window !== 'undefined' ) exports = window;
-  	
+if (typeof window !== 'undefined') exports = window;
+
 exports._ = {
 	/**
 	 * Iterates over list invoking callback fn on each item
@@ -39,13 +39,26 @@ exports._ = {
 	 * @return {mixed}   memo  
 	 */
 	reduce: function(list, fn, memo) {
+
+		var cb = function(item, i) {
+			if (memo) {
+				memo = fn(memo, item, i, list);
+			} else {
+				memo = item;
+			}
+		};
+
+		this.each(list, cb);
+
+		/*
 		for (var i = 0; i < list.length; i++) {
 			if (memo) {
 				memo = fn(memo, list[i], i, list);
 			} else {
 				memo = list[i];
 			}
-		}
+		}*/
+
 		return memo;
 	},
 	/**
@@ -286,7 +299,7 @@ exports._ = {
 		} else {
 			return 'Infinity';
 		}
-	},	
+	},
 	/**
 	 * Returns min value in list.
 	 * @param  {Array,Object}   list 
@@ -397,7 +410,7 @@ exports._ = {
 			var value = iteratee(list[i]);
 
 			if (result[value]) {
-				result[value] ++;
+				result[value]++;
 			} else {
 				result[value] = 1;
 			}
