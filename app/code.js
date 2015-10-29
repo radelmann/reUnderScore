@@ -25,10 +25,9 @@ exports._ = {
 	 */
 	map: function(list, fn) {
 		var result = [];
-		var mapFn = function(item) {
+		this.each(list, function(item) {
 			result.push(fn(item));
-		};
-		this.each(list, mapFn);
+		});
 		return result;
 	},
 	/**
@@ -39,26 +38,13 @@ exports._ = {
 	 * @return {mixed}   memo  
 	 */
 	reduce: function(list, fn, memo) {
-
-		var cb = function(item, i) {
+		this.each(list, function(item, i) {
 			if (memo) {
 				memo = fn(memo, item, i, list);
 			} else {
 				memo = item;
 			}
-		};
-
-		this.each(list, cb);
-
-		/*
-		for (var i = 0; i < list.length; i++) {
-			if (memo) {
-				memo = fn(memo, list[i], i, list);
-			} else {
-				memo = list[i];
-			}
-		}*/
-
+		});
 		return memo;
 	},
 	/**
@@ -108,12 +94,11 @@ exports._ = {
 	 */
 	filter: function(list, fn) {
 		var result = [];
-		var filterFn = function(item) {
+		this.each(list, function(item) {
 			if (fn(item)) {
 				result.push(item);
 			}
-		};
-		this.each(list, filterFn);
+		});
 		return result;
 	},
 	/**
@@ -124,8 +109,8 @@ exports._ = {
 	 */
 	where: function(list, properties) {
 		var result = [];
-		for (var i = 0; i < list.length; i++) {
-			var match = true;
+		for (var i = 0, match; i < list.length; i++) {
+			match = true;
 			for (var key in properties) {
 				if (list[i][key] !== properties[key]) {
 					match = false;
@@ -143,8 +128,8 @@ exports._ = {
 	 */
 	findWhere: function(list, properties) {
 		var result = [];
-		for (var i = 0; i < list.length; i++) {
-			var match = true;
+		for (var i = 0, match; i < list.length; i++) {
+			match = true;
 			for (var key in properties) {
 				if (list[i][key] !== properties[key]) {
 					match = false;
@@ -162,12 +147,11 @@ exports._ = {
 	 */
 	reject: function(list, fn) {
 		var result = [];
-		var rejectFn = function(item) {
-			if (fn(item) === false) {
+		this.each(list, function(item) {
+			if (!fn(item)) {
 				result.push(item);
 			}
-		};
-		this.each(list, rejectFn);
+		});
 		return result;
 	},
 	/**
@@ -212,8 +196,8 @@ exports._ = {
 					return true;
 				}
 			}
-			return false;
 		}
+		return false;
 	},
 	/**
 	 * Returns true value is present in list.
@@ -256,15 +240,20 @@ exports._ = {
 	 */
 	pluck: function(list, propertyName) {
 		result = [];
-		if (this.isArray(list)) {
-			for (var i = 0; i < list.length; i++) {
-				result.push(list[i][propertyName]);
-			}
-		} else if (this.isObject(list)) {
-			for (var key in list) {
-				result.push(list[key][propertyName]);
-			}
-		}
+
+		this.each(list, function(item) {
+			result.push(item[propertyName]);
+		});
+
+		// if (this.isArray(list)) {
+		// 	for (var i = 0; i < list.length; i++) {
+		// 		result.push(list[i][propertyName]);
+		// 	}
+		// } else if (this.isObject(list)) {
+		// 	for (var key in list) {
+		// 		result.push(list[key][propertyName]);
+		// 	}
+		// }
 		return result;
 	},
 	/**
@@ -439,8 +428,7 @@ exports._ = {
 	 * @return {Array}      
 	 */
 	sample: function(list, n) {
-		if (!n) n = 1;
-
+		n = n || 1;
 		var shuffle = this.shuffle(list);
 		return shuffle.splice(0, n);
 	},
@@ -450,11 +438,7 @@ exports._ = {
 	 * @return {Array}      
 	 */
 	toArray: function(list) {
-		var result = [];
-		for (var i = 0; i < list.length; i++) {
-			result.push(list[i]);
-		}
-		return result;
+		return Array.prototype.slice.call(list);
 	},
 	/**
 	 * Returns number of values in list
@@ -476,17 +460,16 @@ exports._ = {
 	 */
 	partition: function(list, fn) {
 		var result = [];
-		var yes = [],
-			no = [];
-		for (var i = 0; i < list.length; i++) {
-			if (fn(list[i])) {
-				yes.push(list[i]);
-			} else {
-				no.push(list[i]);
-			}
-		}
+		var yes = [];
+	  var no = [];
+		
+		this.each(list, function(item) {
+			fn(item) ? yes.push(item) : no.push(item);
+		});
+		
 		result.push(yes);
 		result.push(no);
+
 		return result;
 	},
 
