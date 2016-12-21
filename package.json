@@ -1,7 +1,7 @@
 {
-  "name": "reUnderScore",
+  "name": "reunderscore",
   "version": "1.0.0",
-  "description": "underScore.js Implementation for learning js fundamentals. ",
+  "description": "underScore.js implementation",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

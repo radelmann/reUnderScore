@@ -1,35 +1,58 @@
-if (typeof window !== 'undefined') exports = window;
+(function () {
 
-exports._ = {
+	if (typeof window !== 'undefined') exports = window;
+
+	var _ = {};
+
+	_.indentity = function (val) {
+		return val;
+	}
+	/**
+	 * returns true if list is an array
+	 * @param  {Object}  list 
+	 * @return {Boolean}      
+	 */
+	_.isArray = function (list) {
+		return Array.isArray(list);
+	}
+	/**
+	 * returns true if list is an object
+	 * @param  {Object}  list 
+	 * @return {Boolean}      
+	 */
+	_.isObject = function (list) {
+		return typeof list === 'object';
+	}
+
 	/**
 	 * Iterates over list invoking callback fn on each item
 	 * @param  {[object,array]}   list 
 	 * @param  {Function} fn   
 	 */
-	each: function(list, fn) {
-		if (this.isArray(list)) {
+	_.each = function (list, fn) {
+		if (_.isArray(list)) {
 			for (var i = 0; i < list.length; i++) {
 				fn(list[i]);
 			}
-		} else if (this.isObject(list)) {
+		} else if (_.isObject(list)) {
 			for (var key in list) {
 				fn(list[key]);
 			}
 		}
-	},
+	}
 	/**
 	 * Returns new array based on mapping list items though fn
 	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {Array}        
 	 */
-	map: function(list, fn) {
+	_.map = function (list, fn) {
 		var result = [];
-		this.each(list, function(item) {
+		_.each(list, function (item) {
 			result.push(fn(item));
 		});
 		return result;
-	},
+	}
 	/**
 	 * Reduces list down to single value
 	 * @param  {Array}   list 
@@ -37,16 +60,19 @@ exports._ = {
 	 * @param  {mixed}   memo 
 	 * @return {mixed}   memo  
 	 */
-	reduce: function(list, fn, memo) {
-		this.each(list, function(item, i) {
-			if (memo) {
-				memo = fn(memo, item, i, list);
-			} else {
+	_.reduce = function (list, fn, memo) {
+		var init = arguments.length === 3;
+		fn = fn || _.indentity();
+		_.each(list, function (item, i) {
+			if (!init) {
 				memo = item;
+				init = true;
+			} else {
+				memo = fn(memo, item);
 			}
 		});
 		return memo;
-	},
+	}
 	/**
 	 * Performs reduce in reverse order
 	 * @param  {Array}   list  
@@ -54,30 +80,23 @@ exports._ = {
 	 * @param  {mixed}   memo 
 	 * @return {mixed}   memo     
 	 */
-	reduceRight: function(list, fn, memo) {
-		for (var i = list.length - 1; i >= 0; i--) {
-			if (memo) {
-				memo = fn(memo, list[i], i, list);
-			} else {
-				memo = list[i];
-			}
-		}
-		return memo;
-	},
+	_.reduceRight = function (list, fn, memo) {
+		return _.reduce(list.reverse(), fn, memo);
+	}
 	/**
 	 * Searches list returns first item to pass true for predicate
 	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {mixed}        
 	 */
-	find: function(list, fn) {
-		if (this.isArray(list)) {
+	_.find = function (list, fn) {
+		if (_.isArray(list)) {
 			for (var i = 0; i < list.length; i++) {
 				if (fn(list[i]) === true) {
 					return list[i];
 				}
 			}
-		} else if (this.isObject(list)) {
+		} else if (_.isObject(list)) {
 			for (var key in list) {
 				if (fn(list[key]) === true) {
 					return list[key];
@@ -85,29 +104,29 @@ exports._ = {
 			}
 		}
 		return;
-	},
+	}
 	/**
 	 * Searches list returns all items to pass true for predicate
 	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {Array}        
 	 */
-	filter: function(list, fn) {
+	_.filter = function (list, fn) {
 		var result = [];
-		this.each(list, function(item) {
+		_.each(list, function (item) {
 			if (fn(item)) {
 				result.push(item);
 			}
 		});
 		return result;
-	},
+	}
 	/**
 	 * Searches list, returns array of all values that match properties key value pairs.
 	 * @param  {Array} list       
 	 * @param  {Object} properties 
 	 * @return {Array}            
 	 */
-	where: function(list, properties) {
+	_.where = function (list, properties) {
 		var result = [];
 		for (var i = 0, match; i < list.length; i++) {
 			match = true;
@@ -119,14 +138,14 @@ exports._ = {
 			if (match) result.push(list[i]);
 		}
 		return result;
-	},
+	}
 	/**
 	 * Searches list, returns first value that matches properties key value pairs.
 	 * @param  {Array} list       
 	 * @param  {Object} properties 
 	 * @return {Mixed}            
 	 */
-	findWhere: function(list, properties) {
+	_.findWhere = function (list, properties) {
 		var result = [];
 		for (var i = 0, match; i < list.length; i++) {
 			match = true;
@@ -138,36 +157,36 @@ exports._ = {
 			if (match) return list[i];
 		}
 		return;
-	},
+	}
 	/**
 	 * Returns values in list that return false for predicate
 	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {Array}        
 	 */
-	reject: function(list, fn) {
+	_.reject = function (list, fn) {
 		var result = [];
-		this.each(list, function(item) {
+		_.each(list, function (item) {
 			if (!fn(item)) {
 				result.push(item);
 			}
 		});
 		return result;
-	},
+	}
 	/**
 	 * Returns true if all values in list return true for predicate
 	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {Bool}        
 	 */
-	every: function(list, fn) {
-		if (this.isArray(list)) {
+	_.every = function (list, fn) {
+		if (_.isArray(list)) {
 			for (var i = 0; i < list.length; i++) {
 				if (fn(list[i]) === false) {
 					return false;
 				}
 			}
-		} else if (this.isObject(list)) {
+		} else if (_.isObject(list)) {
 			for (var key in list) {
 				if (fn(list[key]) === false) {
 					return false;
@@ -175,22 +194,22 @@ exports._ = {
 			}
 		}
 		return true;
-	},
+	}
 	/**
 	 * Returns true if any values in list return true for predicate
 	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {Bool}        
 	 */
-	some: function(list, fn) {
-		if (this.isArray(list)) {
+	_.some = function (list, fn) {
+		if (_.isArray(list)) {
 			for (var i = 0; i < list.length; i++) {
 				if (fn(list[i]) === true) {
 					return true;
 				}
 			}
 			return false;
-		} else if (this.isObject(list)) {
+		} else if (_.isObject(list)) {
 			for (var key in list) {
 				if (fn(list[key]) === true) {
 					return true;
@@ -198,7 +217,7 @@ exports._ = {
 			}
 		}
 		return false;
-	},
+	}
 	/**
 	 * Returns true value is present in list.
 	 * @param  {Array} list      
@@ -206,7 +225,7 @@ exports._ = {
 	 * @param  {int} fromIndex 
 	 * @return {Bool}           
 	 */
-	contains: function(list, value, fromIndex) {
+	_.contains = function (list, value, fromIndex) {
 		if (!fromIndex) {
 			fromIndex = 0;
 		}
@@ -215,56 +234,47 @@ exports._ = {
 			if (list[i] === value) return true;
 		}
 		return false;
-	},
+	}
 	/**
 	 * Calls methodName for each value in list.
 	 * @param  {Array} list       
 	 * @param  {String} methodName 
 	 * @return {Array}            
 	 */
-	invoke: function(list, methodName) {
+	_.invoke = function (list, methodName) {
 		var result = [];
 		for (var i = 0; i < list.length; i++) {
 			var item = list[i];
-			if (this.isFunction(item[methodName])) {
+			if (_.isFunction(item[methodName])) {
 				result.push(item[methodName].apply(item));
 			}
 		}
 		return result;
-	},
+	}
 	/**
 	 * Extracts a list of property values
 	 * @param  {Array,Object} list         
 	 * @param  {String} propertyName 
 	 * @return {Array}              
 	 */
-	pluck: function(list, propertyName) {
+	_.pluck = function (list, propertyName) {
 		result = [];
 
-		this.each(list, function(item) {
+		_.each(list, function (item) {
 			result.push(item[propertyName]);
 		});
 
-		// if (this.isArray(list)) {
-		// 	for (var i = 0; i < list.length; i++) {
-		// 		result.push(list[i][propertyName]);
-		// 	}
-		// } else if (this.isObject(list)) {
-		// 	for (var key in list) {
-		// 		result.push(list[key][propertyName]);
-		// 	}
-		// }
 		return result;
-	},
+	}
 	/**
 	 * Returns max value in list.
 	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {Mixed}        
 	 */
-	max: function(list, fn) {
+	_.max = function (list, fn) {
 		var value, result;
-		if (this.isFunction(fn)) {
+		if (_.isFunction(fn)) {
 			for (var i = 0; i < list.length; i++) {
 				var itemValue = fn(list[i]);
 				if (i === 0) {
@@ -277,7 +287,7 @@ exports._ = {
 			}
 		} else {
 			//no iteratee func - use array sort
-			result = list.sort(function(a, b) {
+			result = list.sort(function (a, b) {
 				return parseInt(b) - parseInt(a);
 			});
 			return result[0];
@@ -288,16 +298,16 @@ exports._ = {
 		} else {
 			return 'Infinity';
 		}
-	},
+	}
 	/**
 	 * Returns min value in list.
 	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {Mixed}        
 	 */
-	min: function(list, fn) {
+	_.min = function (list, fn) {
 		var value, result;
-		if (this.isFunction(fn)) {
+		if (_.isFunction(fn)) {
 			for (var i = 0; i < list.length; i++) {
 				var itemValue = fn(list[i]);
 				if (i === 0) {
@@ -309,7 +319,7 @@ exports._ = {
 				}
 			}
 		} else {
-			result = list.sort(function(a, b) {
+			result = list.sort(function (a, b) {
 				return parseInt(a) - parseInt(b);
 			})[0];
 		}
@@ -319,36 +329,36 @@ exports._ = {
 		} else {
 			return 'Infinity';
 		}
-	},
+	}
 	/**
 	 * Returns sorted copy of list.
 	 * @param  {Array} list     
 	 * @param  {Function,String} iteratee 
 	 * @return {Array}          
 	 */
-	sortBy: function(list, iteratee) {
-		if (this.isFunction(iteratee)) {
+	_.sortBy = function (list, iteratee) {
+		if (_.isFunction(iteratee)) {
 			//sort by iteratee fn
-			return list.sort(function(a, b) {
+			return list.sort(function (a, b) {
 				return iteratee(a) > iteratee(b);
 			});
 		} else {
 			//sort by iteratee property
-			return list.sort(function(a, b) {
+			return list.sort(function (a, b) {
 				return a[iteratee] > b[iteratee];
 			});
 		}
-	},
+	}
 	/**
 	 * Splits Collection into lists, grouped by predicate result.
 	 * @param  {Array} list     
 	 * @param  {Function,String} iteratee 
 	 * @return {object}          
 	 */
-	groupBy: function(list, iteratee) {
+	_.groupBy = function (list, iteratee) {
 		var result = {};
 		var value, i;
-		if (this.isFunction(iteratee)) {
+		if (_.isFunction(iteratee)) {
 			for (i = 0; i < list.length; i++) {
 				value = iteratee(list[i]);
 
@@ -359,7 +369,7 @@ exports._ = {
 					result[value].push(list[i]);
 				}
 			}
-		} else if (this.isString(iteratee)) {
+		} else if (_.isString(iteratee)) {
 			for (i = 0; i < list.length; i++) {
 				value = list[i][iteratee];
 
@@ -372,28 +382,28 @@ exports._ = {
 			}
 		}
 		return result;
-	},
+	}
 	/**
 	 * Returns key value pairs for each element in list based on interatee property.
 	 * @param  {Array} list     
 	 * @param  {String} iteratee 
 	 * @return {Object}          
 	 */
-	indexBy: function(list, iteratee) {
+	_.indexBy = function (list, iteratee) {
 		var result = {};
 		for (i = 0; i < list.length; i++) {
 			value = list[i][iteratee];
 			result[value] = list[i];
 		}
 		return result;
-	},
+	}
 	/**
 	 * Sort list into groups, return count by group.
 	 * @param  {Array} list     
 	 * @param  {Function} iteratee 
 	 * @return {Object}          
 	 */
-	countBy: function(list, iteratee) {
+	_.countBy = function (list, iteratee) {
 		var result = {};
 		for (var i = 0; i < list.length; i++) {
 			var value = iteratee(list[i]);
@@ -405,124 +415,115 @@ exports._ = {
 			}
 		}
 		return result;
-	},
+	}
 	/**
 	 * Returns shuffled copy of list.
 	 * @param  {Array} list 
 	 * @return {Array}      
 	 */
-	shuffle: function(list) {
+	_.shuffle = function (list) {
 		var length = list.length;
 		var shuffled = Array(length);
 		for (var index = 0, rand; index < length; index++) {
-			rand = this.getRandom(index);
+			rand = _.getRandom(index);
 			if (rand !== index) shuffled[index] = shuffled[rand];
 			shuffled[rand] = list[index];
 		}
 		return shuffled;
-	},
+	}
 	/**
 	 * Returns random sample from list."
 	 * @param  {Array} list 
 	 * @param  {Int} n    
 	 * @return {Array}      
 	 */
-	sample: function(list, n) {
+	_.sample = function (list, n) {
 		n = n || 1;
-		var shuffle = this.shuffle(list);
+		var shuffle = _.shuffle(list);
 		return shuffle.splice(0, n);
-	},
+	}
 	/**
 	 * Returns array from list
 	 * @param  {List} list - anything that can be iterated over (i.e. arguments param) 
 	 * @return {Array}      
 	 */
-	toArray: function(list) {
+	_.toArray = function (list) {
 		return Array.prototype.slice.call(list);
-	},
+	}
 	/**
 	 * Returns number of values in list
 	 * @param  {Array,Object} list 
 	 * @return {int}      
 	 */
-	size: function(list) {
-		if (this.isArray(list)) {
+	_.size = function (list) {
+		if (_.isArray(list)) {
 			return list.length;
-		} else if (this.isObject(list)) {
+		} else if (_.isObject(list)) {
 			return Object.keys(list).length;
 		}
-	},
+	}
 	/**
 	 * Splits array into two groups based on predicate result from each item.
 	 * @param  {Array,Object}   list 
 	 * @param  {Function} fn   
 	 * @return {Array}        
 	 */
-	partition: function(list, fn) {
+	_.partition = function (list, fn) {
 		var result = [];
 		var yes = [];
-	  var no = [];
-		
-		this.each(list, function(item) {
+		var no = [];
+
+		_.each(list, function (item) {
 			fn(item) ? yes.push(item) : no.push(item);
 		});
-		
+
 		result.push(yes);
 		result.push(no);
 
 		return result;
-	},
+	}
+
+	_.first = function (list, n) {
+		n = n || 1;
+		return list.slice(0, n);
+	}
+
 
 	/**
 	 * returns number between 1 and n
 	 * @param  {int} n 
 	 * @return {int}   
 	 */
-	getRandom: function(n) {
+	_.getRandom = function (n) {
 		return Math.floor(Math.random() * n);
-	},
+	}
 
 	/**
 	 * returns true is object is a string
 	 * @param  {Object}  object 
 	 * @return {Boolean}        
 	 */
-	isString: function(object) {
+	_.isString = function (object) {
 		if (typeof object === 'string') {
 			return true;
 		} else {
 			return false;
 		}
-	},
+	}
 
 	/**
 	 * returns true if object is a function
 	 * @param  {object}  object 
 	 * @return {Boolean}        
 	 */
-	isFunction: function(object) {
+	_.isFunction = function (object) {
 		if (typeof object === 'function') {
 			return true;
 		} else {
 			return false;
 		}
-	},
-	/**
-	 * returns true if list is an array
-	 * @param  {Object}  list 
-	 * @return {Boolean}      
-	 */
-	isArray: function(list) {
-		return Array.isArray(list);
-	},
-	/**
-	 * returns true if list is an object
-	 * @param  {Object}  list 
-	 * @return {Boolean}      
-	 */
-	isObject: function(list) {
-		return typeof list === 'object';
-	},
+	}
+
 	/**
 	 * returns array of numbers based on start, end and step values
 	 * @param  {Int} start optional
@@ -530,7 +531,7 @@ exports._ = {
 	 * @param  {Int} step  optional
 	 * @return {Array}       
 	 */
-	range: function(start, end, step) {
+	_.range = function (start, end, step) {
 		if (!end) {
 			end = start;
 			start = 0;
@@ -543,19 +544,23 @@ exports._ = {
 			arr.push(i);
 		}
 		return arr;
-	},
+	}
 	/**
 	 * Invokes callback fn one time, subsequent calls result in no action
 	 * @param  {Function} fn 
 	 * @return {Function}      
 	 */
-	once: function(fn) {
+	_.once = function (fn) {
 		var once = false;
-		return function() {
+		var result;
+		return function () {
 			if (once === false) {
-				fn(arguments);
+				result = fn(arguments);
 				once = true;
 			}
+			return result;
 		};
 	}
-};
+
+	module.exports = _;
+} ());
