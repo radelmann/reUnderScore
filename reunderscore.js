@@ -4,25 +4,25 @@
 
   var _ = {};
 
-  _.indentity = function(val) {
+  function identity(val) {
     return val;
-  };
+  }
   /**
    * returns true if list is an array
    * @param  {Object}  list
    * @return {Boolean}
    */
-  _.isArray = function(list) {
+  function isArray(list) {
     return Array.isArray(list);
-  };
+  }
   /**
    * returns true if list is an object
    * @param  {Object}  list
    * @return {Boolean}
    */
-  _.isObject = function(list) {
+  function isObject(list) {
     return typeof list === 'object';
-  };
+  }
 
   /**
    * Iterates over list invoking callback fn on each item
@@ -30,11 +30,11 @@
    * @param  {Function} fn
    */
   _.each = function(list, fn) {
-    if (_.isArray(list)) {
+    if (isArray(list)) {
       for (var i = 0; i < list.length; i++) {
         fn(list[i]);
       }
-    } else if (_.isObject(list)) {
+    } else if (isObject(list)) {
       for (var key in list) {
         fn(list[key]);
       }
@@ -62,7 +62,7 @@
    */
   _.reduce = function(list, fn, memo) {
     var init = arguments.length === 3;
-    fn = fn || _.indentity();
+    fn = fn || identity;
     _.each(list, function(item) {
       if (!init) {
         memo = item;
@@ -90,13 +90,13 @@
    * @return {mixed}
    */
   _.find = function(list, fn) {
-    if (_.isArray(list)) {
+    if (isArray(list)) {
       for (var i = 0; i < list.length; i++) {
         if (fn(list[i]) === true) {
           return list[i];
         }
       }
-    } else if (_.isObject(list)) {
+    } else if (isObject(list)) {
       for (var key in list) {
         if (fn(list[key]) === true) {
           return list[key];
@@ -180,13 +180,13 @@
    * @return {Bool}
    */
   _.every = function(list, fn) {
-    if (_.isArray(list)) {
+    if (isArray(list)) {
       for (var i = 0; i < list.length; i++) {
         if (fn(list[i]) === false) {
           return false;
         }
       }
-    } else if (_.isObject(list)) {
+    } else if (isObject(list)) {
       for (var key in list) {
         if (fn(list[key]) === false) {
           return false;
@@ -202,14 +202,14 @@
    * @return {Bool}
    */
   _.some = function(list, fn) {
-    if (_.isArray(list)) {
+    if (isArray(list)) {
       for (var i = 0; i < list.length; i++) {
         if (fn(list[i]) === true) {
           return true;
         }
       }
       return false;
-    } else if (_.isObject(list)) {
+    } else if (isObject(list)) {
       for (var key in list) {
         if (fn(list[key]) === true) {
           return true;
@@ -461,9 +461,9 @@
    * @return {int}
    */
   _.size = function(list) {
-    if (_.isArray(list)) {
+    if (isArray(list)) {
       return list.length;
-    } else if (_.isObject(list)) {
+    } else if (isObject(list)) {
       return Object.keys(list).length;
     }
     return 0;
