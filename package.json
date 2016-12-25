@@ -6,14 +6,19 @@
   "scripts": {
     "start": "node index.js",
     "test": "./node_modules/.bin/mocha --reporter spec",
-    "lint": "eslint reunderscore.js test/*.js"
+    "lint": "eslint reunderscore.js test/*.js",
+    "minify": "uglifyjs reunderscore.js -c \"evaluate=false\" --comments \"/    .*/\" -m",
+    "build": "npm run minify -- --source-map reunderscore-min.map --source-map-url \" \" -o reunderscore-min.js"
   },
   "author": "Rob Adelmann",
   "license": "MIT",
   "dependencies": {
+    "build": "npm run minify -- --source-map reunderscore-min.map --source-map-url \" \" -o reunderscore-min.js",
     "chai": "^2.3.0",
     "eslint": "^3.12.2",
     "express": "^4.12.4",
-    "mocha": "^2.2.5"
+    "minify": "uglifyjs reunderscore.js -c \"evaluate=false\" --comments \"/    .*/\" -m",
+    "mocha": "^2.2.5",
+    "uglify-js": "^2.7.5"
   }
 }
