@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "lint": "eslint reunderscore.js test/*.js"
   },
   "author": "Rob Adelmann",
   "license": "MIT",
   "dependencies": {
     "chai": "^2.3.0",
+    "eslint": "^3.12.2",
     "express": "^4.12.4",
     "mocha": "^2.2.5"
   }
