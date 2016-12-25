@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/radelmann/reUnderScore.svg?branch=master)](https://travis-ci.org/radelmann/reUnderScore)
+
 Partial Clone of the underscore.js library.
 
 You can clone or download this repo. Once you have done so, from the root
