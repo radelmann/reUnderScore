@@ -3,7 +3,7 @@
 
 if (typeof window === 'undefined') {
   var expect = require('chai').expect;
-  var _ = require('../reunderscore.js');
+  var _ = require('../reunderscore.js')._;
 }
 
 describe('reUnderScore - Collection Functions', function() {

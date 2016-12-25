@@ -560,8 +560,8 @@
         once = true;
       }
       return result;
-    };
   };
+    };
 
-  module.exports = _;
+  exports._ = _;
 }());
