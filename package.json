@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "./node_modules/.bin/mocha --reporter spec",
+    "test": "npm run lint && npm run test-node && npm run test-browser",
+    "test-node": "./node_modules/.bin/mocha --reporter spec",
+    "test-browser": "./node_modules/karma/bin/karma start karma.conf.js",
     "lint": "eslint reunderscore.js test/*.js",
     "minify": "uglifyjs reunderscore.js -c \"evaluate=false\" --comments \"/    .*/\" -m",
     "build": "npm run minify -- --source-map reunderscore-min.map --source-map-url \" \" -o reunderscore-min.js"
@@ -13,11 +15,14 @@
   "author": "Rob Adelmann",
   "license": "MIT",
   "dependencies": {
-    "build": "npm run minify -- --source-map reunderscore-min.map --source-map-url \" \" -o reunderscore-min.js",
     "chai": "^2.3.0",
     "eslint": "^3.12.2",
     "express": "^4.12.4",
-    "minify": "uglifyjs reunderscore.js -c \"evaluate=false\" --comments \"/    .*/\" -m",
+    "karma": "^1.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^1.3.0",
+    "karma-sinon": "^1.0.5",
+    "karma-phantomjs-launcher": "^0.1.4",
     "mocha": "^2.2.5",
     "uglify-js": "^2.7.5"
   }

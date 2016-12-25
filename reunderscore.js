@@ -339,12 +339,19 @@
     if (_.isFunction(iteratee)) {
       //sort by iteratee fn
       return list.sort(function(a, b) {
-        return iteratee(a) > iteratee(b);
+        return iteratee(a) - iteratee(b);
       });
     }
     //sort by iteratee property
     return list.sort(function(a, b) {
-      return a[iteratee] > b[iteratee];
+      if (a[iteratee] < b[iteratee]) {
+        return -1;
+      }
+      if (a[iteratee] > b[iteratee]) {
+        return 1;
+      }
+      // equal
+      return 0;
     });
   };
   /**
@@ -560,8 +567,8 @@
         once = true;
       }
       return result;
-  };
     };
+  };
 
   exports._ = _;
 }());
