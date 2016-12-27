@@ -1,9 +1,18 @@
+/** namespace */
 (function() {
 
   if (typeof window !== 'undefined') exports = window;
 
+  /**
+   * @namespace
+   * @alias _
+   */
   var _ = {};
-
+  /**
+   * returns value passed in, for use when no callback is supplied
+   * @param {Object} val
+   * @return {Object}
+   */
   function identity(val) {
     return val;
   }
@@ -26,7 +35,7 @@
 
   /**
    * Iterates over list invoking callback fn on each item
-   * @param  {[object,array]}   list
+   * @param  {Object|array}   list
    * @param  {Function} fn
    */
   _.each = function(list, fn) {
@@ -42,8 +51,8 @@
   };
   /**
    * Returns new array based on mapping list items though fn
-   * @param  {Array,Object}   list
-   * @param  {Function} fn
+   * @param {Array|Object} list
+   * @param {Function} fn
    * @return {Array}
    */
   _.map = function(list, fn) {
@@ -85,8 +94,8 @@
   };
   /**
    * Searches list returns first item to pass true for predicate
-   * @param  {Array,Object}   list
-   * @param  {Function} fn
+   * @param {Array|Object} list
+   * @param {Function} fn
    * @return {mixed}
    */
   _.find = function(list, fn) {
@@ -107,8 +116,8 @@
   };
   /**
    * Searches list returns all items to pass true for predicate
-   * @param  {Array,Object}   list
-   * @param  {Function} fn
+   * @param {Array|Object} list
+   * @param {Function} fn
    * @return {Array}
    */
   _.filter = function(list, fn) {
@@ -122,7 +131,7 @@
   };
   /**
    * Searches list, returns array of all values that match properties key value pairs.
-   * @param  {Array} list
+   * @param {Array} list
    * @param  {Object} properties
    * @return {Array}
    */
@@ -141,7 +150,7 @@
   };
   /**
    * Searches list, returns first value that matches properties key value pairs.
-   * @param  {Array} list
+   * @param {Array} list
    * @param  {Object} properties
    * @return {Mixed}
    */
@@ -160,8 +169,8 @@
   };
   /**
    * Returns values in list that return false for predicate
-   * @param  {Array,Object}   list
-   * @param  {Function} fn
+   * @param {Array|Object} list
+   * @param {Function} fn
    * @return {Array}
    */
   _.reject = function(list, fn) {
@@ -175,8 +184,8 @@
   };
   /**
    * Returns true if all values in list return true for predicate
-   * @param  {Array,Object}   list
-   * @param  {Function} fn
+   * @param {Array|Object} list
+   * @param {Function} fn
    * @return {Bool}
    */
   _.every = function(list, fn) {
@@ -197,8 +206,8 @@
   };
   /**
    * Returns true if any values in list return true for predicate
-   * @param  {Array,Object}   list
-   * @param  {Function} fn
+   * @param {Array|Object} list
+   * @param {Function} fn
    * @return {Bool}
    */
   _.some = function(list, fn) {
@@ -220,7 +229,7 @@
   };
   /**
    * Returns true value is present in list.
-   * @param  {Array} list
+   * @param {Array} list
    * @param  {mixed} value
    * @param  {int} fromIndex
    * @return {Bool}
@@ -237,7 +246,7 @@
   };
   /**
    * Calls methodName for each value in list.
-   * @param  {Array} list
+   * @param {Array} list
    * @param  {String} methodName
    * @return {Array}
    */
@@ -253,7 +262,7 @@
   };
   /**
    * Extracts a list of property values
-   * @param  {Array,Object} list
+   * @param  {Array|Object} list
    * @param  {String} propertyName
    * @return {Array}
    */
@@ -268,8 +277,8 @@
   };
   /**
    * Returns max value in list.
-   * @param  {Array,Object}   list
-   * @param  {Function} fn
+   * @param {Array|Object} list
+   * @param {Function} fn
    * @return {Mixed}
    */
   _.max = function(list, fn) {
@@ -301,8 +310,8 @@
   };
   /**
    * Returns min value in list.
-   * @param  {Array,Object}   list
-   * @param  {Function} fn
+   * @param {Array|Object} list
+   * @param {Function} fn
    * @return {Mixed}
    */
   _.min = function(list, fn) {
@@ -331,8 +340,8 @@
   };
   /**
    * Returns sorted copy of list.
-   * @param  {Array} list
-   * @param  {Function,String} iteratee
+   * @param {Array} list
+   * @param {Function|string} iteratee
    * @return {Array}
    */
   _.sortBy = function(list, iteratee) {
@@ -356,8 +365,8 @@
   };
   /**
    * Splits Collection into lists, grouped by predicate result.
-   * @param  {Array} list
-   * @param  {Function,String} iteratee
+   * @param {Array} list
+   * @param {Function|string} iteratee
    * @return {object}
    */
   _.groupBy = function(list, iteratee) {
@@ -390,8 +399,8 @@
   };
   /**
    * Returns key value pairs for each element in list based on interatee property.
-   * @param  {Array} list
-   * @param  {String} iteratee
+   * @param {Array} list
+   * @param {String} iteratee
    * @return {Object}
    */
   _.indexBy = function(list, iteratee) {
@@ -404,8 +413,8 @@
   };
   /**
    * Sort list into groups, return count by group.
-   * @param  {Array} list
-   * @param  {Function} iteratee
+   * @param {Array} list
+   * @param {Function} iteratee
    * @return {Object}
    */
   _.countBy = function(list, iteratee) {
@@ -423,7 +432,7 @@
   };
   /**
    * Returns shuffled copy of list.
-   * @param  {Array} list
+   * @param {Array} list
    * @return {Array}
    */
   _.shuffle = function(list) {
@@ -438,8 +447,8 @@
   };
   /**
    * Returns random sample from list."
-   * @param  {Array} list
-   * @param  {Int} n
+   * @param {Array} list
+   * @param {Int} n
    * @return {Array}
    */
   _.sample = function(list, n) {
@@ -449,7 +458,7 @@
   };
   /**
    * Returns array from list
-   * @param  {List} list - anything that can be iterated over (i.e. arguments param)
+   * @param {List} list - anything that can be iterated over (i.e. arguments param)
    * @return {Array}
    */
   _.toArray = function(list) {
@@ -457,7 +466,7 @@
   };
   /**
    * Returns number of values in list
-   * @param  {Array,Object} list
+   * @param {Array|Object} list
    * @return {int}
    */
   _.size = function(list) {
@@ -470,8 +479,8 @@
   };
   /**
    * Splits array into two groups based on predicate result from each item.
-   * @param  {Array,Object}   list
-   * @param  {Function} fn
+   * @param {Array|Object} list
+   * @param {Function} fn
    * @return {Array}
    */
   _.partition = function(list, fn) {
@@ -493,6 +502,12 @@
     return result;
   };
 
+  /**
+   * returns first element in list
+   * @param {Array} list
+   * @param {integer} n
+   * @return {Object} value
+   */
   _.first = function(list, n) {
     n = n || 1;
     return list.slice(0, n);

@@ -9,19 +9,22 @@
     "test-browser": "./node_modules/karma/bin/karma start karma.conf.js",
     "lint": "eslint reunderscore.js test/*.js",
     "minify": "uglifyjs reunderscore.js -c \"evaluate=false\" --comments \"/    .*/\" -m",
-    "build": "npm run minify -- --source-map reunderscore-min.map --source-map-url \" \" -o reunderscore-min.js"
+    "build": "npm run minify -- --source-map reunderscore-min.map --source-map-url \" \" -o reunderscore-min.js",
+    "doc": "./node_modules/.bin/jsdoc -d docs reunderscore.js"
   },
   "author": "Rob Adelmann",
   "license": "MIT",
   "dependencies": {
     "chai": "^2.3.0",
     "eslint": "^3.12.2",
+    "jsdoc": "^3.4.3",
     "karma": "^1.3.0",
     "karma-chai": "^0.1.0",
     "karma-mocha": "^1.3.0",
-    "karma-sinon": "^1.0.5",
     "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon": "^1.0.5",
     "mocha": "^2.2.5",
+    "sinon": "^1.17.6",
     "uglify-js": "^2.7.5"
   }
 }
