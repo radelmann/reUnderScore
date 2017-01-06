@@ -34,6 +34,18 @@
   }
 
   /**
+   * returns true if object is a function
+   * @param  {object}  object
+   * @return {Boolean}
+   */
+  function isFunction(object) {
+    if (typeof object === 'function') {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Iterates over list invoking callback fn on each item
    * @param  {Object|array}   list
    * @param  {Function} fn
@@ -41,11 +53,11 @@
   _.each = function(list, fn) {
     if (isArray(list)) {
       for (var i = 0; i < list.length; i++) {
-        fn(list[i]);
+        fn(list[i], i, list);
       }
     } else if (isObject(list)) {
       for (var key in list) {
-        fn(list[key]);
+        fn(list[key], key, list);
       }
     }
   };
@@ -254,7 +266,7 @@
     var result = [];
     for (var i = 0; i < list.length; i++) {
       var item = list[i];
-      if (_.isFunction(item[methodName])) {
+      if (isFunction(item[methodName])) {
         result.push(item[methodName].apply(item));
       }
     }
@@ -283,7 +295,7 @@
    */
   _.max = function(list, fn) {
     var value, result;
-    if (_.isFunction(fn)) {
+    if (isFunction(fn)) {
       for (var i = 0; i < list.length; i++) {
         var itemValue = fn(list[i]);
         if (i === 0) {
@@ -316,7 +328,7 @@
    */
   _.min = function(list, fn) {
     var value, result;
-    if (_.isFunction(fn)) {
+    if (isFunction(fn)) {
       for (var i = 0; i < list.length; i++) {
         var itemValue = fn(list[i]);
         if (i === 0) {
@@ -345,7 +357,7 @@
    * @return {Array}
    */
   _.sortBy = function(list, iteratee) {
-    if (_.isFunction(iteratee)) {
+    if (isFunction(iteratee)) {
       //sort by iteratee fn
       return list.sort(function(a, b) {
         return iteratee(a) - iteratee(b);
@@ -372,7 +384,7 @@
   _.groupBy = function(list, iteratee) {
     var result = {};
     var value, i;
-    if (_.isFunction(iteratee)) {
+    if (isFunction(iteratee)) {
       for (i = 0; i < list.length; i++) {
         value = iteratee(list[i]);
 
@@ -535,17 +547,6 @@
     return false;
   };
 
-  /**
-   * returns true if object is a function
-   * @param  {object}  object
-   * @return {Boolean}
-   */
-  _.isFunction = function(object) {
-    if (typeof object === 'function') {
-      return true;
-    }
-    return false;
-  };
 
   /**
    * returns array of numbers based on start, end and step values
